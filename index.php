@@ -2,8 +2,9 @@
 include_once 'includes/db_connect.php';
 include_once 'includes/functions.php';
  
-sec_session_start();
- 
+ sec_session_start();
+
+
 if (login_check($mysqli) == true) {
     $logged = 'in';
 } 
@@ -58,6 +59,7 @@ else {
 	        else{
 	          echo '<p>Currently logged ' . $logged . '.</p>';
 	          echo "<p>If you don't have a login, please <a href='register.php'>register</a></p>";
+	          echo '<p>Do you want to change user? <a href="includes/logout.php">Log out</a>.</p>';
 	        }
       	?> 
 

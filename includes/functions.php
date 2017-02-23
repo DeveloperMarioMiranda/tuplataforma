@@ -3,9 +3,9 @@
 
 	function sec_session_start(){
 
-		$session_name = 'sec_session_id'; //nome da sessao
+		//$session_name = 'sec_session_id'; //nome da sessao
 
-		session_name($session_name);
+		//session_name($session_name);
 
 		$secure = true;
 
@@ -17,10 +17,10 @@
 		}
 
 		$cookieparams = session_get_cookie_params();
-		session_set_cookie_params($cookieparams["lifetime"], $cookieparams["path"], $cookieparams["domain"], $secure, $httponly);
+		session_set_cookie_params($cookieparams["lifetime"], $cookieparams["path"], $cookieparams["domain"], true, true);
 
 		session_start();            // Start the PHP session 
-   	 	session_regenerate_id(true);
+   	 	//session_regenerate_id(true);
 	}
 
 	function login($usuario, $senhaInput, $mysqli) {
@@ -34,22 +34,6 @@
 	        // get variables from result.
 	        $stmt->bind_result($id, $usuario, $senha, $email, $dateRegis);
 	        $stmt->fetch();
-/*
-	 		echo $id . "<br>";
-	 		echo $usuario. "<br>";
-	 		echo "Senha do BD: " .$senha. "<br>";
-	 		echo "Senha do input: " .$senhaInput. "<br>";
-	 		echo $email. "<br>";
-	 		echo $dateRegis. "<br>";
-
-	 		echo '<pre>';
-			var_dump($_SESSION);
-			echo '</pre>';
-*/
-
-			echo '<pre>';
-			print_r($mysqli);
-			echo '</pre>';
 
 	        if ($stmt->num_rows == 1) { 
 	            // If the user exists we check if the account is locked
@@ -67,7 +51,6 @@
 	                // the password_verify function to avoid timing attacks.
 	                
 	                if (password_verify($senhaInput, $senha)){
-	            	//if ($senhaInput == $senha){
 	                    // Password is correct!
 	                    // Get the user-agent string of the user.
 	                   // echo "Senha Correta";
@@ -80,9 +63,6 @@
 	                    $_SESSION['usuario'] = $usuario;
 	                    $_SESSION['login_string'] = hash('sha512', $senha . $user_browser);
 
-
-	                   // echo "Sessao e => " . $_SESSION['usuario']. " e logi => " . $_SESSION['login_string'];
-	                    // Login successful.
 	                    return true;
 	                }
 
@@ -115,21 +95,25 @@
 	        $login_string = $_SESSION['login_string'];
 	        $username = $_SESSION['usuario'];
 
+	        //echo "O nome é ". $username . " e id " . $user_id;
 
 	        // Get the user-agent string of the user.
-	        $user_browser = $_SERVER['HTTP_USER_AGENT'];
-	 
+	        $user_browser = $_SERVER['HTTP_USER_AGENT'];	 
 	        if ($stmt = $mysqli->prepare("SELECT senha FROM usuarios WHERE id = ? LIMIT 1")){
 	            // Bind "$user_id" to parameter. 
-	            $stmt->bind_param('i', $id);
+	            $stmt->bind_param('i', $user_id);
 	            $stmt->execute();   // busca o usuario dado o id
 	            $stmt->store_result();
-	 	
+	 			
+
 	            if($stmt->num_rows == 1){ //verifica se achou
 	                // se achar o usuario  ve se a senha confere
 	                $stmt->bind_result($senha);
 	                $stmt->fetch();
-	                $login_check = hash('sha512', $senha . $user_browser);	//criptografia usada. usar para cadastrar tbm
+	                $login_check = hash('sha512', $senha . $user_browser);
+
+	                //echo "Aqui o check = ".$login_check ."<br>";
+	                //echo "Aqui o String = ".$login_string;
 	 
 	                if (hash_equals($login_check, $login_string) ){
 	                    // Logged In!!!! 
@@ -138,7 +122,7 @@
 
 	                else {
 	                    // Not logged in 
-	                    echo "primeiro";
+	                 //  	echo "primeiro";
 	                    return false;
 	                }
 	            }
@@ -159,7 +143,6 @@
 	    }
 
 	    else{
-	    	echo "quarto";
 	        // Not logged in 
 	        return false;
 	    }

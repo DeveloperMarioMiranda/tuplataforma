@@ -14,7 +14,7 @@ if (isset($_POST['usuario'], $_POST['p'])){
         header('Location: ../protected_page.php');
     } else {
         // Login failed 
-        //header('Location: ../index.php?error=1');
+        header('Location: ../index.php?error=1');
     }
 }
 else {
