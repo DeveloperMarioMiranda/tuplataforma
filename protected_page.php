@@ -21,6 +21,11 @@ sec_session_start();
                 authorised to access the page.
             </p>
             <p>Return to <a href="index.php">login page</a></p>
+
+            <form action="includes/file-uploads.php" method="post" enctype="multipart/form-data" style="border-color: black; border-width: 1px; border-style: solid;">
+                <input type="file" name="foto" style="padding: 20px;"> <br>
+                <input type="submit" name="btn" value="Enviar Foto" style="margin-left: 20px;">
+            </form>
         <?php else : ?>
             <p>
                 <span class="error">You are not authorized to access this page.</span> Please <a href="index.php">login</a>.
