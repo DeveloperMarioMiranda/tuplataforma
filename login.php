@@ -64,7 +64,7 @@
                    <div class="span4"></div>
                     <div class="span8">
                         <div class="container-signin">
-                            <legend><h2>Control de Asistencia 2017 modificada</h2></legend>
+                            <legend><h2  style="color:blue;">Control de Asistencia 2017 modificada</h2></legend>
                             <form  method='POST' id='loginForm' class='form-signin' autocomplete='off'>
                                 <div class="form-inner">
                                     <div class="input-prepend">
